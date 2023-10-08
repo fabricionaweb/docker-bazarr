@@ -49,10 +49,8 @@ COPY --from=source /src/frontend/public ./public
 COPY --from=source /src/frontend/index.html ./
 COPY --from=source /src/frontend/vite.config.ts ./
 COPY --from=source /src/frontend/src ./src
-RUN npm run build
-
-# cleanup
-RUN find ./ -name "*.map" -type f -delete
+RUN npm run build && \
+    find ./ -name "*.map" -type f -delete
 
 # virtual env stage ============================================================
 FROM base AS build-venv
