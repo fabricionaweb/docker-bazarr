@@ -4,4 +4,4 @@
 cd /config
 
 # run with limited permissions
-exec s6-setuidgid $PUID:$PGID python3 /app/bazarr.py --no-update --config=/config
+exec s6-setuidgid $PUID:$PGID python3 /app/bazarr.py --debug --no-update --config=/config
