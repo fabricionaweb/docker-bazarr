@@ -1,5 +1,21 @@
 #!/usr/bin/with-contenv sh
 
+CONFIG_FILE=/config/config/config.ini
+
+# create initial config file
+if [[ ! -f "$CONFIG_FILE" ]]; then
+  mkdir -p $(dirname "$CONFIG_FILE")
+  cat <<EOF >"$CONFIG_FILE"
+[analytics]
+enabled = False
+EOF
+  # not a good practice but I cant think anything better
+  chown -R $PUID:$PGID /config
+else
+  # disable analytics
+  sed -i -r "/^\[analytics\]/{:l /^enabled[ ]*/{s/=.*/= True/};n;b l;}" "$CONFIG_FILE"
+fi
+
 # change chdir
 cd /config
 
