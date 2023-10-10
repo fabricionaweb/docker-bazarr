@@ -13,11 +13,6 @@ ADD https://github.com/morpheus65535/bazarr.git#v$VERSION ./
 # bazarr versioning
 RUN echo "v$VERSION" > VERSION
 
-# apply available patches
-# RUN apk add --no-cache patch
-# COPY patches ./
-# RUN find . -name "*.patch" -print0 | sort -z | xargs -t -0 -n1 patch -p1 -i
-
 # unrar stage ==================================================================
 FROM base as build-unrar
 WORKDIR /src
