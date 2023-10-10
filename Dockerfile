@@ -85,7 +85,7 @@ COPY --from=source /src/bazarr.py /src/VERSION /app/
 COPY --from=build-unrar /usr/bin/unrar /usr/bin/
 COPY --from=build-frontend /src/build /app/frontend/build
 COPY --from=build-venv /opt/venv /opt/venv
-COPY ./rootfs /
+COPY ./rootfs/. /
 
 # creates python env
 ENV PATH="/opt/venv/bin:$PATH"
