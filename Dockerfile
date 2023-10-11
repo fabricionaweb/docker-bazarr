@@ -1,10 +1,10 @@
 # syntax=docker/dockerfile:1-labs
 FROM public.ecr.aws/docker/library/alpine:3.18 AS base
 ENV TZ=UTC
+WORKDIR /src
 
 # source stage =================================================================
 FROM base AS source
-WORKDIR /src
 
 # get and extract source from git
 ARG VERSION
@@ -15,7 +15,6 @@ RUN echo "v$VERSION" > VERSION
 
 # unrar stage ==================================================================
 FROM base as build-unrar
-WORKDIR /src
 
 # dependencies
 RUN apk add --no-cache build-base
@@ -29,7 +28,6 @@ RUN make && make install
 
 # frontend stage ===============================================================
 FROM base AS build-frontend
-WORKDIR /src
 
 # dependencies
 RUN apk add --no-cache nodejs-current && corepack enable npm
@@ -49,7 +47,6 @@ RUN npm run build && \
 
 # virtual env stage ============================================================
 FROM base AS build-venv
-WORKDIR /src
 
 # dependencies
 RUN apk add --no-cache build-base python3-dev openblas-dev
