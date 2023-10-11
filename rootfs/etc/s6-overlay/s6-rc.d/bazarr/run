@@ -14,7 +14,7 @@ EOF
   install -m644  -o $PUID -g $PGID "$TMP_FILE" "$CONFIG_FILE"
 else
   # disable analytics
-  sed -i -r "/^\[analytics\]/{:l /^enabled[ ]*/{s/=.*/= True/};n;b l;}" "$CONFIG_FILE"
+  sed -i -r "/^\[analytics\]$/,/^\[.*/{ /^enabled[ ]*=/s/=.*/= False/ }" "$CONFIG_FILE"
 fi
 
 # change chdir
