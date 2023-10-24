@@ -37,11 +37,7 @@ COPY --from=source /src/frontend/package*.json /src/frontend/tsconfig.json ./
 RUN npm ci --fund=false --audit=false
 
 # frontend source and build
-COPY --from=source /src/frontend/config ./config
-COPY --from=source /src/frontend/public ./public
-COPY --from=source /src/frontend/index.html ./
-COPY --from=source /src/frontend/vite.config.ts ./
-COPY --from=source /src/frontend/src ./src
+COPY --from=source /src/frontend ./
 RUN npm run build && \
     find ./ -name "*.map" -type f -delete
 
