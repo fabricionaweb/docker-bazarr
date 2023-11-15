@@ -7,8 +7,9 @@ WORKDIR /src
 FROM base AS source
 
 # get and extract source from git
+ARG BRANCH
 ARG VERSION
-ADD https://github.com/morpheus65535/bazarr.git#v$VERSION ./
+ADD https://github.com/morpheus65535/bazarr.git#${BRANCH:-v$VERSION} ./
 
 # bazarr versioning
 RUN echo "v$VERSION" > VERSION
