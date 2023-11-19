@@ -63,9 +63,6 @@ WORKDIR /config
 VOLUME /config
 EXPOSE 6767
 
-# runtime dependencies
-RUN apk add --no-cache tzdata s6-overlay ffmpeg mediainfo openblas python3 curl
-
 # copy files
 COPY --from=source /src/bazarr /app/bazarr
 COPY --from=source /src/libs /app/libs
@@ -75,6 +72,9 @@ COPY --from=build-unrar /usr/bin/unrar /usr/bin/
 COPY --from=build-frontend /src/build /app/frontend/build
 COPY --from=build-venv /opt/venv /opt/venv
 COPY ./rootfs/. /
+
+# runtime dependencies
+RUN apk add --no-cache tzdata s6-overlay ffmpeg mediainfo openblas python3 curl
 
 # creates python env
 ENV PATH="/opt/venv/bin:$PATH"
