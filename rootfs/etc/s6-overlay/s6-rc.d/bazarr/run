@@ -12,9 +12,6 @@ EOF
 
   install -dm755 -o $PUID -g $PGID "$(dirname "$CONFIG_FILE")"
   install -m644  -o $PUID -g $PGID "$TMP_FILE" "$CONFIG_FILE"
-else
-  # disable analytics
-  sed -i -E "/^analytics:$/,/^[^[:blank:]].*/{ /^[[:blank:]]+enabled:/s/:.*/: false/ }" "$CONFIG_FILE"
 fi
 
 # change chdir
