@@ -66,6 +66,7 @@ EXPOSE 6767
 # copy files
 COPY --from=source /src/bazarr /app/bazarr
 COPY --from=source /src/libs /app/libs
+COPY --from=source /src/custom_libs /app/custom_libs
 COPY --from=source /src/migrations /app/migrations
 COPY --from=source /src/bazarr.py /src/VERSION /app/
 COPY --from=build-unrar /usr/bin/unrar /usr/bin/
