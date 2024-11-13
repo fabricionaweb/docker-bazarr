@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1-labs
-FROM public.ecr.aws/docker/library/alpine:3.19 AS base
+FROM public.ecr.aws/docker/library/alpine:3.20 AS base
 ENV TZ=UTC
 WORKDIR /src
 
@@ -31,7 +31,7 @@ RUN make && make install
 FROM base AS build-frontend
 
 # dependencies
-RUN apk add --no-cache nodejs-current && corepack enable npm
+RUN apk add --no-cache npm
 
 # node_modules
 COPY --from=source /src/frontend/package*.json /src/frontend/tsconfig.json ./
