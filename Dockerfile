@@ -1,15 +1,16 @@
 # syntax=docker/dockerfile:1-labs
-FROM public.ecr.aws/docker/library/alpine:3.20 AS base
+FROM public.ecr.aws/docker/library/alpine:3.21 AS base
 ENV TZ=UTC
 WORKDIR /src
 
 # source stage =================================================================
 FROM base AS source
 
-# get and extract source from git
+# get and extract source from git (must use only one or another build-args)
 ARG BRANCH
 ARG VERSION
-ADD https://github.com/morpheus65535/bazarr.git#${BRANCH:-v$VERSION} ./
+ADD https://github.com/morpheus65535/bazarr/archive/refs/${BRANCH:+heads/$BRANCH}${VERSION:+tags/v$VERSION}.tar.gz /tmp/source.tgz
+RUN tar --strip-components=1 -xf /tmp/source.tgz
 
 # bazarr versioning
 RUN echo "v$VERSION" > VERSION
@@ -22,7 +23,7 @@ RUN apk add --no-cache build-base
 
 # get and extract
 ARG UNRAR_VERSION=6.2.8
-RUN wget -qO- https://www.rarlab.com/rar/unrarsrc-$UNRAR_VERSION.tar.gz | tar xz --strip-component 1
+RUN wget -qO- https://www.rarlab.com/rar/unrarsrc-$UNRAR_VERSION.tar.gz | tar xz --strip-component=1
 
 # build
 RUN make && make install
